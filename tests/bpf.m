@@ -16,7 +16,9 @@ for f = (0:100:20000)
    test_signal = test_signal + sin(2*pi*f*t);
 end
 
-x = test_signal;
+%x = test_signal;
+
+[x, Fs] = audioread('../acoustic.wav');
 
 figure(1);
 plotSpectrum(x, Fs)
@@ -61,6 +63,11 @@ function plotSpectrum(data, Fs)
     XP(2:end-1) = 2*XP(2:end-1);
 
     f = Fs*(0:(N/2))/N;
-                
-    plot(f(1:20000), XP(1:20000));
+    f =f';
+    
+    if (length(f) >= 20000)
+        plot(f(1:20000), XP(1:20000));
+    else
+        plot(f, XP);
+    end
 end
